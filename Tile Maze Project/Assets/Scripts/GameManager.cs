@@ -6,9 +6,8 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     public BoardManager boardScript;
+    [HideInInspector] public bool playerInControl = true;
 
-
-	// Use this for initialization
 	void Awake () {
 
         if (instance == null)
@@ -26,7 +25,6 @@ public class GameManager : MonoBehaviour {
         boardScript.setupScene();
     }
 
-	// Update is called once per frame
 	void Update () {
 		
 	}

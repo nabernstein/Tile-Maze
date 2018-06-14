@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61871232217254172}
   m_Layer: 9
   m_Name: StopTile
-  m_TagString: Untagged
+  m_TagString: Stop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

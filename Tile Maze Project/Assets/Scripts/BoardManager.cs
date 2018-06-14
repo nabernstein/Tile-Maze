@@ -35,8 +35,6 @@ public class BoardManager : MonoBehaviour {
                 instance.transform.SetParent(boardHolder);
             }
         }
-
-
     }
 
     public void setupScene() {
