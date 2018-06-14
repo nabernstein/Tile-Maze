@@ -6,5 +6,7 @@ AnimatorOverrideController:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: RightTile
-  m_Controller: {fileID: 0}
-  m_Clips: []
+  m_Controller: {fileID: 9100000, guid: 3a71b7792bba5784cabb6f232f9a5aff, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 6e861c7d806d6c24a90fe4bf1d11cae4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 06a6c1b32bf632547a295b22dc9a4c76, type: 2}

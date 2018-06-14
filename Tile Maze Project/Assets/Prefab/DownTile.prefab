@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212872818859256082}
   - component: {fileID: 95224937938051982}
   - component: {fileID: 61133346356926680}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DownTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   m_GameObject: {fileID: 1878138578675348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.78869605, y: -0.071109295, z: 0.17647977}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
