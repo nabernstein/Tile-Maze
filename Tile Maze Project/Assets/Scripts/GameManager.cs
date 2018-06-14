@@ -5,8 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
+    public float turnDelay = 0.1f;
     public BoardManager boardScript;
     [HideInInspector] public bool playerInControl = true;
+
+    private bool tileMoving;
 
 	void Awake () {
 
@@ -26,6 +29,17 @@ public class GameManager : MonoBehaviour {
     }
 
 	void Update () {
-		
+        if (playerInControl || tileMoving)
+            return;
+
+        StartCoroutine(TileMovement());
 	}
+
+    IEnumerator TileMovement() {
+        tileMoving = true;
+
+        yield return new WaitForSeconds(turnDelay);
+        playerInControl = true;
+        tileMoving = false;
+    }
 }
