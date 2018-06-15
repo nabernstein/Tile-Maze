@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour {
 
@@ -10,7 +11,8 @@ public class PlayerController : MonoBehaviour {
     Animator animator;
     BoxCollider2D boxCollider;
     Rigidbody2D rb2D;
-    private GameObject collidedTile;
+    public GameObject collidedTile;
+
 
     // Use this for initialization
     void Start() {
@@ -22,6 +24,9 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         animator.SetBool("keyHeldDown", IsKeyDown());
+
+        if (collidedTile != null)
+            collidedTile.GetComponent<TilemapCollider2D>().enabled = true;
 
         if (!isMoving) {
             int horizontal = (int)Input.GetAxisRaw("Horizontal");
@@ -59,11 +64,13 @@ public class PlayerController : MonoBehaviour {
         animator.SetBool("isMoving", isMoving);
         animator.SetFloat("xPosLast", xDir);
         animator.SetFloat("yPosLast", yDir);
-        yield return null;
+        yield return new WaitForSeconds(1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         string moveTile = collision.tag;
+        collidedTile = collision.gameObject;
+        collision.enabled = false;
         bool spinning = true;
         int xDir = 0, yDir = 0;
         Debug.Log("Entering " + moveTile + " Tile.");
@@ -75,7 +82,7 @@ public class PlayerController : MonoBehaviour {
         if(xDir !=0 || yDir != 0){
             StartCoroutine(Move(xDir, yDir));
         }
-
+        
         //animator.SetBool("Spinning", true);
     }
 
@@ -91,5 +98,4 @@ public class PlayerController : MonoBehaviour {
             Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
     }
-
 }
