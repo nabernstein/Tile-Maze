@@ -24,17 +24,17 @@ public class BoardManager : MonoBehaviour {
     void BoardSetup() {
         boardHolder = new GameObject("Board").transform;
 
-        for(int x = -1; x < cols + 1; ++x) {
-            for (int y = -1; y < rows + 1; ++y) {
-                GameObject toInstantiate = floorTile;
-                if (x == -1 || x == cols || y == -1 || y == rows)
-                    toInstantiate = wallTile;
+        //for(int x = -1; x < cols + 1; ++x) {
+        //    for (int y = -1; y < rows + 1; ++y) {
+        //        GameObject toInstantiate = floorTile;
+        //        if (x == -1 || x == cols || y == -1 || y == rows)
+        //            toInstantiate = wallTile;
 
-                GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+        //        GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
-                instance.transform.SetParent(boardHolder);
-            }
-        }
+        //        instance.transform.SetParent(boardHolder);
+        //    }
+        //}
     }
 
     public void setupScene() {

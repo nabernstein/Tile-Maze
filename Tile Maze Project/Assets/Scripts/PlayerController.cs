@@ -10,14 +10,14 @@ public class PlayerController : MonoBehaviour {
     float moveTime;
     int h, v;
     Animator animator;
-    
+
     // Use this for initialization
-	void Start () {
-        animator = GetComponent<Animator>();		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start() {
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update() {
         animator.SetBool("keyHeldDown", IsKeyDown());
 
         if (!isMoving) {
@@ -26,12 +26,12 @@ public class PlayerController : MonoBehaviour {
 
             if (h != 0)
                 v = 0;
-            
-            if (h != 0 || v != 0){
+
+            if (h != 0 || v != 0) {
                 StartCoroutine(Move(transform));
             }
         }
-	}
+    }
 
     public IEnumerator Move(Transform t) {
         isMoving = true;
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour {
         moveTime = 0;
         endPos = new Vector3(startPos.x + h, startPos.y + v, 0f);
 
-        while (moveTime < 1f){
+        while (moveTime < 1f) {
             moveTime += Time.deltaTime * moveSpeed;
             t.position = Vector3.Lerp(startPos, endPos, moveTime);
             yield return null;
