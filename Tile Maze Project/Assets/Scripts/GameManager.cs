@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
-    public float turnDelay = 0.1f;
+    public float turnDelay = 0f;
     public BoardManager boardScript;
     [HideInInspector] public bool playerInControl = true;
 

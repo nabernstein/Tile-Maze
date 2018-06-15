@@ -13,12 +13,13 @@ public class PlayerController : MonoBehaviour {
     
     // Use this for initialization
 	void Start () {
-        animator = GetComponent<Animator>();
-		
+        animator = GetComponent<Animator>();		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        animator.SetBool("keyHeldDown", IsKeyDown());
+
         if (!isMoving) {
             h = (int)Input.GetAxisRaw("Horizontal");
             v = (int)Input.GetAxisRaw("Vertical");
@@ -52,6 +53,13 @@ public class PlayerController : MonoBehaviour {
         animator.SetFloat("xPosLast", h);
         animator.SetFloat("yPosLast", v);
         yield return 0;
+    }
+
+    bool IsKeyDown() {
+        return Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) ||
+            Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) ||
+            Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) ||
+            Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
     }
 
 }
