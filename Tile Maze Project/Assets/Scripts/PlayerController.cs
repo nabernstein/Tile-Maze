@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     Animator animator;
     BoxCollider2D boxCollider;
     Rigidbody2D rb2D;
+    private GameObject collidedTile;
 
     // Use this for initialization
     void Start() {
@@ -60,6 +61,29 @@ public class PlayerController : MonoBehaviour {
         animator.SetFloat("yPosLast", yDir);
         yield return null;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        string moveTile = collision.tag;
+        bool spinning = true;
+        int xDir = 0, yDir = 0;
+        Debug.Log("Entering " + moveTile + " Tile.");
+        //if (moveTile == "Up" || moveTile == "Down")
+        //    yDir = (moveTile == "Up") ? 1 : -1;
+        //if (moveTile == "Left" || moveTile == "Right")
+        //    xDir = (moveTile == "Right") ? 1 : -1;
+
+        if(xDir !=0 || yDir != 0){
+            StartCoroutine(Move(xDir, yDir));
+        }
+
+        //animator.SetBool("Spinning", true);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        string moveTile = collision.tag;
+        Debug.Log("Exiting " + moveTile + " Tile.");
+    }
+
 
     bool IsKeyDown() {
         return Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) ||
