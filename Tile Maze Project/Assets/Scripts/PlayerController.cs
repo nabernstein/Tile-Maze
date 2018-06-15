@@ -5,15 +5,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float moveSpeed = 3f;
+    public LayerMask blockingLayer;
     bool isMoving = false;
-    Vector3 startPos, endPos;
-    float moveTime;
-    int h, v;
     Animator animator;
+    BoxCollider2D boxCollider;
+    Rigidbody2D rb2D;
 
     // Use this for initialization
     void Start() {
         animator = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -21,38 +23,42 @@ public class PlayerController : MonoBehaviour {
         animator.SetBool("keyHeldDown", IsKeyDown());
 
         if (!isMoving) {
-            h = (int)Input.GetAxisRaw("Horizontal");
-            v = (int)Input.GetAxisRaw("Vertical");
+            int horizontal = (int)Input.GetAxisRaw("Horizontal");
+            int vertical = (int)Input.GetAxisRaw("Vertical");
 
-            if (h != 0)
-                v = 0;
+            if (horizontal != 0)
+                vertical = 0;
 
-            if (h != 0 || v != 0) {
-                StartCoroutine(Move(transform));
+            if (horizontal != 0 || vertical != 0) {
+                StartCoroutine(Move(horizontal, vertical));
             }
         }
     }
 
-    public IEnumerator Move(Transform t) {
+    public IEnumerator Move(int xDir, int yDir) {
         isMoving = true;
+        animator.SetFloat("xPos", xDir);
+        animator.SetFloat("yPos", yDir);
+        Vector2 start = transform.position;
+        Vector2 end = start + new Vector2(xDir, yDir);
+        boxCollider.enabled = false;
+        RaycastHit2D hit = Physics2D.Linecast(start, end, blockingLayer);
+        boxCollider.enabled = true;
+        end = (hit.transform == null) ? end : start;
         animator.SetBool("isMoving", isMoving);
-        animator.SetFloat("xPos", h);
-        animator.SetFloat("yPos", v);
-        startPos = t.position;
-        moveTime = 0;
-        endPos = new Vector3(startPos.x + h, startPos.y + v, 0f);
 
+        float moveTime = 0;
         while (moveTime < 1f) {
             moveTime += Time.deltaTime * moveSpeed;
-            t.position = Vector3.Lerp(startPos, endPos, moveTime);
+            transform.position = Vector2.Lerp(start, end, moveTime);
             yield return null;
         }
 
         isMoving = false;
         animator.SetBool("isMoving", isMoving);
-        animator.SetFloat("xPosLast", h);
-        animator.SetFloat("yPosLast", v);
-        yield return 0;
+        animator.SetFloat("xPosLast", xDir);
+        animator.SetFloat("yPosLast", yDir);
+        yield return null;
     }
 
     bool IsKeyDown() {
