@@ -5,17 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float moveSpeed = 3f;
-    Direction currentDir;
-    Vector2 input;
     bool isMoving = false;
     Vector3 startPos, endPos;
     float moveTime;
     int h, v;
     Animator animator;
-
-    public Sprite[] dirSprites;
-
-	// Use this for initialization
+    
+    // Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
 		
@@ -29,39 +25,18 @@ public class PlayerController : MonoBehaviour {
 
             if (h != 0)
                 v = 0;
-
-            input = new Vector2(h, v);
-
-            if (input != Vector2.zero){
-
-                if (h != 0)
-                    currentDir = (h > 0) ? Direction.Right : Direction.Left;
-                else
-                    currentDir = (v > 0) ? Direction.Up : Direction.Down;
-
-                switch (currentDir) {
-                    case Direction.Down:
-                        animator.SetTrigger("moveDown");
-                        break;
-                    case Direction.Up:
-                        animator.SetTrigger("moveUp");
-                        break;
-                    case Direction.Left:
-                        animator.SetTrigger("moveLeft");
-                        break;
-                    case Direction.Right:
-                        animator.SetTrigger("moveRight");
-                        break;
-                }
-
+            
+            if (h != 0 || v != 0){
                 StartCoroutine(Move(transform));
             }
         }
-
 	}
 
     public IEnumerator Move(Transform t) {
         isMoving = true;
+        animator.SetBool("isMoving", isMoving);
+        animator.SetFloat("xPos", h);
+        animator.SetFloat("yPos", v);
         startPos = t.position;
         moveTime = 0;
         endPos = new Vector3(startPos.x + h, startPos.y + v, 0f);
@@ -73,14 +48,10 @@ public class PlayerController : MonoBehaviour {
         }
 
         isMoving = false;
+        animator.SetBool("isMoving", isMoving);
+        animator.SetFloat("xPosLast", h);
+        animator.SetFloat("yPosLast", v);
         yield return 0;
     }
-}
 
-enum Direction {
-    Down,
-    Up,
-    Left,
-    Right
 }
-
