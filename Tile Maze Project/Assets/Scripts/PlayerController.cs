@@ -7,11 +7,13 @@ public class PlayerController : MonoBehaviour {
 
     public float moveSpeed = 3f;
     public LayerMask blockingLayer;
-    bool isMoving = false;
+    public bool isMoving = false;
+
     Animator animator;
     BoxCollider2D boxCollider;
     Rigidbody2D rb2D;
-    public GameObject collidedTile;
+    public GameObject onTile;
+    public bool PlayerControl;
 
 
     // Use this for initialization
@@ -19,16 +21,16 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
+        PlayerControl = GameManager.instance.playerInControl;
     }
 
     // Update is called once per frame
     void Update() {
         animator.SetBool("keyHeldDown", IsKeyDown());
-
-        if (collidedTile != null)
-            collidedTile.GetComponent<TilemapCollider2D>().enabled = true;
-
-        if (!isMoving) {
+        GameManager.instance.playerInControl = CheckPlayerControl();
+        PlayerControl = GameManager.instance.playerInControl;
+        
+        if (!isMoving && GameManager.instance.playerInControl) {
             int horizontal = (int)Input.GetAxisRaw("Horizontal");
             int vertical = (int)Input.GetAxisRaw("Vertical");
 
@@ -39,6 +41,10 @@ public class PlayerController : MonoBehaviour {
                 StartCoroutine(Move(horizontal, vertical));
             }
         }
+
+        if (!isMoving && !GameManager.instance.playerInControl && onTile != null) {
+            StartCoroutine(TileMove(onTile));
+        }
     }
 
     public IEnumerator Move(int xDir, int yDir) {
@@ -47,10 +53,7 @@ public class PlayerController : MonoBehaviour {
         animator.SetFloat("yPos", yDir);
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(xDir, yDir);
-        boxCollider.enabled = false;
-        RaycastHit2D hit = Physics2D.Linecast(start, end, blockingLayer);
-        boxCollider.enabled = true;
-        end = (hit.transform == null) ? end : start;
+        end = (CanMove(start,end)) ? end : start;
         animator.SetBool("isMoving", isMoving);
 
         float moveTime = 0;
@@ -68,34 +71,54 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        string moveTile = collision.tag;
-        collidedTile = collision.gameObject;
-        collision.enabled = false;
-        bool spinning = true;
-        int xDir = 0, yDir = 0;
-        Debug.Log("Entering " + moveTile + " Tile.");
-        //if (moveTile == "Up" || moveTile == "Down")
-        //    yDir = (moveTile == "Up") ? 1 : -1;
-        //if (moveTile == "Left" || moveTile == "Right")
-        //    xDir = (moveTile == "Right") ? 1 : -1;
+        onTile = collision.gameObject;
+        animator.SetBool("isSpinning", collision.tag != "Stop");
+        GameManager.instance.playerInControl = false;
+    }
 
-        if(xDir !=0 || yDir != 0){
+    public IEnumerator TileMove(GameObject onTile) {
+        string tileTag = onTile.tag;
+        int xDir = 0, yDir = 0;
+
+        if (tileTag == "Right" || tileTag == "Left")
+            xDir = (tileTag == "Right") ? 1 : -1;
+        if (tileTag == "Up" || tileTag == "Down")
+            yDir = (tileTag == "Up") ? 1 : -1;
+
+        Vector2 start = transform.position,
+            end = start + new Vector2(xDir, yDir);
+
+        if (!CanMove(start, end)) {
+            animator.SetBool("isSpinning", false);
+        }
+
+        if (start != end && CanMove(start, end)) {
             StartCoroutine(Move(xDir, yDir));
         }
         
-        //animator.SetBool("Spinning", true);
+        yield return null;
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        string moveTile = collision.tag;
-        Debug.Log("Exiting " + moveTile + " Tile.");
+    bool CanMove(Vector2 start, Vector2 end) {
+        boxCollider.enabled = false;
+        RaycastHit2D hit = Physics2D.Linecast(start, end, blockingLayer);
+        boxCollider.enabled = true;
+        if (hit)
+            onTile = null;
+        return !hit;
     }
-
 
     bool IsKeyDown() {
         return Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) ||
             Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) ||
             Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
+    }
+
+    bool CheckPlayerControl() {
+        if (onTile == null)
+            return true;
+        else
+            return onTile.tag == "Stop";
     }
 }

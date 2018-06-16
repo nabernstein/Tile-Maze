@@ -315,6 +315,21 @@ Prefab:
       propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 61530366758204198, guid: 210a0d259dba45d4a8e9be2196e29cd3,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 61530366758204198, guid: 210a0d259dba45d4a8e9be2196e29cd3,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 61530366758204198, guid: 210a0d259dba45d4a8e9be2196e29cd3,
+        type: 2}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 210a0d259dba45d4a8e9be2196e29cd3, type: 2}
   m_IsPrefabParent: 0

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 
     private bool tileMoving;
 
-	void Awake () {
+    void Awake() {
 
         if (instance == null)
             instance = this;
@@ -21,19 +21,19 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         boardScript = GetComponent<BoardManager>();
-        InitGame();        
-	}
-	
+        InitGame();
+    }
+
     void InitGame() {
         boardScript.setupScene();
     }
 
-	void Update () {
+    void Update() {
         if (playerInControl || tileMoving)
             return;
 
         StartCoroutine(TileMovement());
-	}
+    }
 
     IEnumerator TileMovement() {
         tileMoving = true;
