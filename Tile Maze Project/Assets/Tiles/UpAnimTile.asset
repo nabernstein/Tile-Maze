@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Name: UpAnimTile
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 21300074, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300076, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300078, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300080, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300082, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300084, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300086, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300088, guid: aa71eb3040489bd4aa514df568875761, type: 3}
+  - {fileID: 21300032, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300034, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300036, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300038, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300040, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300042, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300044, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300046, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
   m_MinSpeed: 10
   m_MaxSpeed: 10
   m_AnimationStartTime: 0

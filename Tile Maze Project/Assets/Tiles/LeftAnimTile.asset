@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Name: LeftAnimTile
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 21300058, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300060, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300062, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300064, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300066, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300068, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300070, guid: aa71eb3040489bd4aa514df568875761, type: 3}
-  - {fileID: 21300072, guid: aa71eb3040489bd4aa514df568875761, type: 3}
+  - {fileID: 21300016, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300018, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300020, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300022, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300024, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300026, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300028, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
+  - {fileID: 21300030, guid: b52ee417496e84b4b989562d2598e92c, type: 3}
   m_MinSpeed: 10
   m_MaxSpeed: 10
   m_AnimationStartTime: 0
