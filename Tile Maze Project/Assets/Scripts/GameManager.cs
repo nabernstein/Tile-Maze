@@ -28,18 +28,19 @@ public class GameManager : MonoBehaviour {
         boardScript.setupScene();
     }
 
-    void Update() {
-        if (playerInControl || tileMoving)
-            return;
+    //These don't acually do anything... yet.
+    //void Update() {
+    //    if (playerInControl || tileMoving)
+    //        return;
 
-        StartCoroutine(TileMovement());
-    }
+    //    StartCoroutine(TileMovement());
+    //}
 
-    IEnumerator TileMovement() {
-        tileMoving = true;
+    //IEnumerator TileMovement() {
+    //    tileMoving = true;
 
-        yield return new WaitForSeconds(turnDelay);
-        playerInControl = true;
-        tileMoving = false;
-    }
+    //    yield return new WaitForSeconds(turnDelay);
+    //    playerInControl = true;
+    //    tileMoving = false;
+    //}
 }

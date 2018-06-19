@@ -8,11 +8,13 @@ public class PlayerController : MonoBehaviour {
     public float moveSpeed = 3f;
     public LayerMask blockingLayer;
     public bool isMoving = false;
+    public bool isAtHome;
 
     Animator animator;
     BoxCollider2D boxCollider;
     Rigidbody2D rb2D;
     public GameObject onTile;
+    public UIInput UIAxisInput;
     public bool PlayerControl;
 
 
@@ -22,17 +24,18 @@ public class PlayerController : MonoBehaviour {
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
         PlayerControl = GameManager.instance.playerInControl;
+        isAtHome = IsAtHomePos();
     }
 
     // Update is called once per frame
     void Update() {
         animator.SetBool("keyHeldDown", IsKeyDown());
         GameManager.instance.playerInControl = CheckPlayerControl();
-        PlayerControl = GameManager.instance.playerInControl;
-        
+        PlayerControl = GameManager.instance.playerInControl; //Just so I can see it in the inspector
+
         if (!isMoving && GameManager.instance.playerInControl) {
-            int horizontal = (int)Input.GetAxisRaw("Horizontal");
-            int vertical = (int)Input.GetAxisRaw("Vertical");
+            int horizontal = UIAxisInput.horizontal == 0 ? (int)Input.GetAxisRaw("Horizontal") : UIAxisInput.horizontal;
+            int vertical = UIAxisInput.vertical == 0 ? (int)Input.GetAxisRaw("Vertical") : UIAxisInput.vertical;
 
             if (horizontal != 0)
                 vertical = 0;
@@ -53,7 +56,7 @@ public class PlayerController : MonoBehaviour {
         animator.SetFloat("yPos", yDir);
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(xDir, yDir);
-        end = (CanMove(start,end)) ? end : start;
+        end = (CanMove(start, end)) ? end : start;
         animator.SetBool("isMoving", isMoving);
 
         float moveTime = 0;
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour {
         if (start != end && CanMove(start, end)) {
             StartCoroutine(Move(xDir, yDir));
         }
-        
+
         yield return null;
     }
 
@@ -109,16 +112,29 @@ public class PlayerController : MonoBehaviour {
     }
 
     bool IsKeyDown() {
-        return Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) ||
-            Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) ||
-            Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) ||
-            Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
+        return Input.anyKey || ButtonListener.isPressed;
+    }
+
+    bool IsAtHomePos() {
+        return (transform.position.x + .5) % 1 < float.Epsilon && (transform.position.y + .25) % 1 < float.Epsilon;
     }
 
     bool CheckPlayerControl() {
-        if (onTile == null)
+        //    if (onTile == null)
+        //        return true;
+        //    else if (onTile.tag == "Stop")
+        //        return true;
+
+        if (!isMoving) {
+            if (onTile != null)
+                return onTile.tag == "Stop";
             return true;
-        else
-            return onTile.tag == "Stop";
+        }
+        return true;
+    }
+
+    void MoveUp() {
+        if(CheckPlayerControl())
+            StartCoroutine(Move(0, 1));
     }
 }
