@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour {
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
         PlayerControl = GameManager.instance.playerInControl;
-        isAtHome = IsAtHomePos();
     }
 
     // Update is called once per frame
@@ -34,12 +33,16 @@ public class PlayerController : MonoBehaviour {
         PlayerControl = GameManager.instance.playerInControl; //Just so I can see it in the inspector
 
         if (!isMoving && GameManager.instance.playerInControl) {
+
+            //Prioritizes input from UI buttons over keyboard
             int horizontal = UIAxisInput.horizontal == 0 ? (int)Input.GetAxisRaw("Horizontal") : UIAxisInput.horizontal;
             int vertical = UIAxisInput.vertical == 0 ? (int)Input.GetAxisRaw("Vertical") : UIAxisInput.vertical;
 
+            //Disallows diagonal movment, prioritizes horizontal movement
             if (horizontal != 0)
                 vertical = 0;
 
+            //Moves one square in the appropriate direction
             if (horizontal != 0 || vertical != 0) {
                 StartCoroutine(Move(horizontal, vertical));
             }
@@ -115,16 +118,7 @@ public class PlayerController : MonoBehaviour {
         return Input.anyKey || ButtonListener.isPressed;
     }
 
-    bool IsAtHomePos() {
-        return (transform.position.x + .5) % 1 < float.Epsilon && (transform.position.y + .25) % 1 < float.Epsilon;
-    }
-
     bool CheckPlayerControl() {
-        //    if (onTile == null)
-        //        return true;
-        //    else if (onTile.tag == "Stop")
-        //        return true;
-
         if (!isMoving) {
             if (onTile != null)
                 return onTile.tag == "Stop";
