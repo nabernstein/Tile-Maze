@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     bool IsKeyDown() {
-        return Input.anyKey || ButtonListener.isPressed;
+        return UIAxisInput.horizontal != 0 || UIAxisInput.vertical != 0;
     }
 
     bool CheckPlayerControl() {

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UIInput : MonoBehaviour {
+public class UIInput : MonoBehaviour{
     public int vertical,
         horizontal;
 
@@ -18,4 +19,5 @@ public class UIInput : MonoBehaviour {
     public void UpdateHorizontal(int change) {
         horizontal += change;
     }
+
 }
