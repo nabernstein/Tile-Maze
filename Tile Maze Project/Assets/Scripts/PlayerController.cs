@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour {
     public float moveSpeed = 3f;
     public LayerMask blockingLayer;
     public bool isMoving = false;
-    public bool isAtHome;
+    public AudioClip footstep1;
+    public AudioClip footstep2;
 
     Animator animator;
     BoxCollider2D boxCollider;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject onTile;
     public UIInput UIAxisInput;
     public bool PlayerControl;
+
 
 
     // Use this for initialization
@@ -61,7 +63,7 @@ public class PlayerController : MonoBehaviour {
         Vector2 end = start + new Vector2(xDir, yDir);
         end = (CanMove(start, end)) ? end : start;
         animator.SetBool("isMoving", isMoving);
-
+        
         float moveTime = 0;
         while (moveTime < 1f) {
             moveTime += Time.deltaTime * moveSpeed;
@@ -127,8 +129,8 @@ public class PlayerController : MonoBehaviour {
         return true;
     }
 
-    void MoveUp() {
-        if(CheckPlayerControl())
-            StartCoroutine(Move(0, 1));
+    public void PlayStep() {
+        SoundManager.instance.RandomizeSFX(footstep1, footstep2);
     }
+
 }

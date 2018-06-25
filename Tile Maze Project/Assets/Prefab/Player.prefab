@@ -123,7 +123,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   isMoving: 0
+  footstep1: {fileID: 8300000, guid: 42b7ad2f1f3c30b4faedb8c315203ad4, type: 3}
+  footstep2: {fileID: 8300000, guid: 4e798c8b63a7d4649bf3bb285e76550f, type: 3}
   onTile: {fileID: 0}
+  UIAxisInput: {fileID: 0}
   PlayerControl: 0
 --- !u!212 &212203897783785448
 SpriteRenderer:
